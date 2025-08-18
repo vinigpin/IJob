@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "api do IJob responsável por gerenciar a lógica e comunicação entre aplicativo móvel e MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "postinstall": "echo 'Dependências instaladas com sucesso!'"
+  },
+  "author": "IJob",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
