@@ -1,4 +1,3 @@
-
 require(".env").config();
 const mongo = require("mongoose");
 
