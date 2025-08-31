@@ -1,3 +1,35 @@
+
+const mongo = require("mongoose");
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const bcrypt = require("bcryptjs");
+const db = require("./bd");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// alguma coisa que alguém pegou do chatgpt pra implementar o pix
 const axios = require("axios");
 
 const API_KEY = "SUA_API_KEY_AQUI"; // pegue no painel do OpenPix
