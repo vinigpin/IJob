@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 
 const UsuarioSchema = new mongoose.Schema({
@@ -7,12 +6,12 @@ const UsuarioSchema = new mongoose.Schema({
   nome: { type: String, required: true },
   regiao: { type: String, required: true },
   enderecoFoto: { type: String },
+  cpf: { type: String, unique: true, sparse: true },
   prestador: {
     contaCadastrada: { type: Number },
     categorias: [{ type: String }],
     nascimento: { type: Date },
     valor: { type: Number },
-    cpf: { type: String, unique: true, sparse: true }
   }
 }, { timestamps: true });
 

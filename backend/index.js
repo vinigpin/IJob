@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
-const db = require("./bd");
+const db = require("./config/bd");
 
 
 
