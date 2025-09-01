@@ -7,7 +7,7 @@ async function getCategorias(){
     return categorias;
   } catch(erro){
     console.log("Erro no getCategorias", erro.message);
-    return null;
+    throw erro;
   }
 }
 

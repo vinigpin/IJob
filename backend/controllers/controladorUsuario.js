@@ -1,5 +1,6 @@
 
 const Usuario = require('../modelos/modeloUsuario');
+const {ObejctId} = require('mongoose').Types;
 const bcrypt = require('bcrypt');
 
 async function login(celular, senha){
@@ -12,7 +13,7 @@ async function login(celular, senha){
   } 
   catch(erro){
     console.log("Erro no login", erro.message);
-    return null;
+    throw erro;
   }
 }
 
@@ -23,7 +24,7 @@ async function cadastroUsuario(usuario){
   } 
   catch(erro){
     console.log("Erro no cadastroUsuario", erro.message);
-    return null;
+    throw erro;
   }
 }
 
@@ -34,23 +35,51 @@ async function getUsuarioPorId(id){
   } 
   catch(erro){
     console.log("Erro no getUsuarioPorId", erro.message);
-    return null;
+    throw erro;
   }
 }
 
 async function editarUsuario(id, dados){
-    // TODO: Implementar edição de cliente
+  try{
+    await Usuario.updateOne(
+      { _id: new ObejctId(id)},
+      dados
+    );
+    return true;
+  } 
+  catch(erro){
+    console.log("Erro no editarUsuario", erro.message);
+    throw erro;
+  }
 }
+
 
 async function getTodosOsPrestadores(){
-    // TODO: Implementar busca de todos os prestadores
+  try{
+    const usuarios = await Usuario.find({
+      prestador: { $ne: null }
+    });
+    return usuarios;
+  } 
+  catch(erro){
+    console.log("Erro no login", erro.message);
+    throw erro;
+  }
 }
 
-async function getPrestadorPorCategoria(categoria){
-    // TODO: Implementar busca de prestador por categoria
+async function getPrestadorPorCategoria(categorias){ // manda um vetor de categorias
+  try{
+    const usuarios = await Usuario.find({
+      prestador: { $ne: null },
+      "prestador.categorias": { $in: categorias}
+    });
+    return usuarios;
+  } 
+  catch(erro){
+    console.log("Erro no login", erro.message);
+    throw erro;
+  }
 }
-
-
 
 
 module.exports = {
