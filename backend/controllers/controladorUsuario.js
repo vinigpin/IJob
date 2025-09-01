@@ -1,17 +1,21 @@
 const Usuario = require('../modelos/modeloUsuario');
 const bcrypt = require('bcrypt');
 
-function login(celular, senha){
+async function login(celular, senha){
   try{
-    const usuario = Usuario.find({
-      celular: celular,
-      senha: senha
-    });
-    return usuario;
+    const usuario = await Usuario.findOne({celular: celular});
+    if (!usuario) 
+        return {sucesso: false, menssagem: "Usuário não encontrado"};
+
+    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    if (!senhaValida)
+        return {sucesso: false, menssagem: "Senha inválida"};
+    
+    const {senha: _, ...usuarioSemSenha} = usuario.toObject();
+    return {sucesso: true, usuario: usuarioSemSenha};
   } 
   catch(erro){
-    console.log("Erro no login", erro.message);
-    return null;
+    throw `Erro de login: ${erro}`;
   }
 }
 
