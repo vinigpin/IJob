@@ -7,7 +7,7 @@ function getAvaliacoesPorServico(idServico) {
     }
     catch(erro){
         console.log("Erro no getAvaliacao", erro.message);
-        return null
+        throw erro;
     }
 }
 
@@ -18,7 +18,7 @@ function criarAvaliacao(avaliacao) {
     }
     catch(erro){
         console.log("Erro no criarAvaliação", erro.message);
-        return false
+        throw erro;
     }
 }
 
