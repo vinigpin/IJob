@@ -1,8 +1,6 @@
-
 const Usuario = require('../modelos/modeloUsuario');
 const bcrypt = require('bcrypt');
 
-// funcoes criadas vazias pelo copilot, implementar depois
 function login(celular, senha){
     // TODO: Implementar login
 }
