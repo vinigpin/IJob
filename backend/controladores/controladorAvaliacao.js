@@ -1,10 +1,25 @@
+const Avaliacao = require('../modelos/avaliacao')
 
 function getAvaliacoesPorServico(idServico) {
-    // TODO: Implementar busca de avaliações por serviço
+    try{
+        const avaliacao = Avaliacao.findById(idServico)
+        return avaliacao
+    }
+    catch(erro){
+        console.log("Erro no getAvaliacao", erro.message);
+        return null
+    }
 }
 
-function criarAvaliacao(dados) {
-    // TODO: Implementar criação de avaliação
+function criarAvaliacao(avaliacao) {
+    try{
+        const texto = Avaliacao.create(avaliacao)
+        return true
+    }
+    catch(erro){
+        console.log("Erro no criarAvaliação", erro.message);
+        return false
+    }
 }
 
 module.exports = {
