@@ -1,3 +1,4 @@
+
 const Usuario = require('../modelos/modeloUsuario');
 const bcrypt = require('bcrypt');
 
@@ -19,44 +20,49 @@ async function login(celular, senha){
   }
 }
 
-function getClientePorId(id){
-    // TODO: Implementar busca de cliente por ID
+async function cadastroUsuario(usuario){
+    try{
+    await Usuario.create(usuario);
+    return true;
+  } 
+  catch(erro){
+    console.log("Erro no cadastroUsuario", erro.message);
+    return null;
+  }
 }
 
-function cadastroCliente(dados){
-    // TODO: Implementar cadastro de cliente
+async function getUsuarioPorId(id){
+  try{
+    const usuario = await Usuario.findById(id);
+    return usuario;
+  } 
+  catch(erro){
+    console.log("Erro no getUsuarioPorId", erro.message);
+    return null;
+  }
 }
 
-function editarCliente(id, dados){
+async function editarUsuario(id, dados){
     // TODO: Implementar edição de cliente
 }
 
-function getTodosOsPrestadores(){
+async function getTodosOsPrestadores(){
     // TODO: Implementar busca de todos os prestadores
 }
 
-function getPrestadorPorCategoria(categoria){
+async function getPrestadorPorCategoria(categoria){
     // TODO: Implementar busca de prestador por categoria
 }
 
-function getPrestadorPorId(id){
-    // TODO: Implementar busca de prestador por ID
-}
 
-function cadastroPrestador(dados){
-    // TODO: Implementar cadastro de prestador
-}
 
 
 module.exports = {
   login,
-  // Cliente
-  getClientePorId,
-  cadastroCliente,
-  editarCliente,
-  // Prestador
+  cadastroUsuario,
+  getUsuarioPorId,
+  editarUsuario,
+  // Prestador em específico
   getTodosOsPrestadores,
-  getPrestadorPorCategoria,
-  getPrestadorPorId,
-  cadastroPrestador
-}
+  getPrestadorPorCategoria
+};
