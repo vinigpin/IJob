@@ -2,7 +2,17 @@ const Usuario = require('../modelos/modeloUsuario');
 const bcrypt = require('bcrypt');
 
 function login(celular, senha){
-    // TODO: Implementar login
+  try{
+    const usuario = Usuario.find({
+      celular: celular,
+      senha: senha
+    });
+    return usuario;
+  } 
+  catch(erro){
+    console.log("Erro no login", erro.message);
+    return null;
+  }
 }
 
 function getClientePorId(id){
@@ -33,9 +43,6 @@ function cadastroPrestador(dados){
     // TODO: Implementar cadastro de prestador
 }
 
-// function editarPrestador(id, dados){
-//     // TODO: Implementar edição de prestador
-// }
 
 module.exports = {
   login,
@@ -48,5 +55,4 @@ module.exports = {
   getPrestadorPorCategoria,
   getPrestadorPorId,
   cadastroPrestador
-  //editarPrestador,
 }
