@@ -1,4 +1,5 @@
-const Avaliacao = require('../modelos/avaliacao')
+
+const Avaliacao = require('../models/avaliacao')
 
 function getAvaliacoesPorServico(idServico) {
     try{

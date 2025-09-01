@@ -1,5 +1,5 @@
 
-const Usuario = require('../modelos/modeloUsuario');
+const Usuario = require('../models/usuario');
 const {ObejctId} = require('mongoose').Types;
 const bcrypt = require('bcrypt');
 
