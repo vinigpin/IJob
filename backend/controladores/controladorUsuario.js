@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 function login(celular, senha){
   try{
     const usuario = Usuario.find({
-    celular: celular,
-    senha: senha
+      celular: celular,
+      senha: senha
     });
     return usuario;
   } 

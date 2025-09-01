@@ -1,5 +1,4 @@
 
-const categoria = require('../modelos/categoria');
 const Categoria = require('../modelos/categoria')
 
 async function getCategorias(){
