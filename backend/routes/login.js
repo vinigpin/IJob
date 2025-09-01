@@ -1,21 +1,24 @@
 const express = require("express");
+const Usuario = require('../controllers/controladorUsuario');
 const router = express.Router();
 
 // Rota de login
-router.post("/login", (req, res) => { const { nome, senha } = req.body;
+router.post("/login", async (req, res) => { 
+    try {
+        const { telefone, senha } = req.body;
+        result = await Usuario.login(telefone, senha);
+        
+        if (!result.sucesso) 
+            return res.status(401).json(result)
+        return res.status(200).json(result)
+    } catch (erro) {
+        res.status(500).json({sucesso: false, menssagem: "Erro no servidor"});
+    }
+});
 
-  const usuarios = [
-    { nome: "joao", senha: "senha123" },
-    { nome: "maria", senha: "senha123" }
-  ];
-
-  const user = usuarios.find(u => u.nome === nome && u.senha === senha);
-
-  if (user) {
-    res.json({ sucesso: true, mensagem: "Login realizado com sucesso!" });
-  } else {
-    res.status(401).json({ sucesso: false, mensagem: "Credenciais inválidas" });
-  }
+// Rota de registro
+router.post("/registrar", async (req, res) => {
+    
 });
 
 module.exports = router;
