@@ -43,21 +43,6 @@ async function getUsuarioPorId(id){
   }
 }
 
-async function editarUsuario(id, dados){
-  try{
-    await Usuario.updateOne(
-      { _id: new ObejctId(id)},
-      dados
-    );
-    return true;
-  } 
-  catch(erro){
-    console.log("Erro no editarUsuario", erro.message);
-    throw erro;
-  }
-}
-
-
 async function getTodosOsPrestadores(){
   try{
     const usuarios = await Usuario.find({
@@ -81,6 +66,20 @@ async function getPrestadorPorCategoria(categorias){ // manda um vetor de catego
   } 
   catch(erro){
     console.log("Erro no login", erro.message);
+    throw erro;
+  }
+}
+
+async function editarUsuario(id, dados){
+  try{
+    await Usuario.updateOne(
+      { _id: new ObejctId(id)},
+      dados
+    );
+    return true;
+  } 
+  catch(erro){
+    console.log("Erro no editarUsuario", erro.message);
     throw erro;
   }
 }

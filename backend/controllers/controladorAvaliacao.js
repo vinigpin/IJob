@@ -1,9 +1,9 @@
 
 const Avaliacao = require('../models/avaliacao')
 
-function getAvaliacoesPorServico(idServico) {
+function getAvaliacoesPorPrestador(idPrestador) {
     try{
-        const avaliacao = Avaliacao.findById(idServico)
+        const avaliacao = Avaliacao.findById(idPrestador)
         return avaliacao
     }
     catch(erro){
