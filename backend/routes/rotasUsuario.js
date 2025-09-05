@@ -1,6 +1,5 @@
 const express = require("express");
 const Usuario = require('../controllers/controladorUsuario');
-const usuario = require("../models/usuario");
 const router = express.Router();
 
 // -------- POST --------

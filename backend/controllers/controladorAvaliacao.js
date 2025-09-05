@@ -3,8 +3,8 @@ const Avaliacao = require('../models/avaliacao')
 
 function getAvaliacoesPorPrestador(idPrestador) {
     try{
-        const avaliacao = Avaliacao.findById(idPrestador)
-        return avaliacao
+        const avaliacao = Avaliacao.findById(idPrestador);
+        return avaliacao;
     }
     catch(erro){
         console.log("Erro no getAvaliacao", erro.message);
@@ -14,8 +14,8 @@ function getAvaliacoesPorPrestador(idPrestador) {
 
 function criarAvaliacao(avaliacao) {
     try{
-        const texto = Avaliacao.create(avaliacao)
-        return true
+        Avaliacao.create(avaliacao);
+        return true;
     }
     catch(erro){
         console.log("Erro no criarAvaliação", erro.message);
@@ -26,4 +26,4 @@ function criarAvaliacao(avaliacao) {
 module.exports = {
     getAvaliacoesPorServico,
     criarAvaliacao
-}
+};
