@@ -16,7 +16,7 @@ router.post("/servicos", async (req, res) => {
 });
 
 // Alterar status de um serviço
-router.put("/servicos/:id/status", async (req, res) => {
+router.put("/servicos/status/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
@@ -27,8 +27,17 @@ router.put("/servicos/:id/status", async (req, res) => {
   }
 });
 
+router.get("/servicos", async(req, res) =>{
+  try{
+    const servicos = await Servico.getTodosOsServicos();
+    return res.status(200).json(servicos);
+  } catch(erro){
+    res.status(500).json({mensagem: "Erro no servidor"});
+  }
+});
+
 // Serviços finalizados do cliente
-router.get("/servicos/cliente/:id/finalizados", async (req, res) => {
+router.get("/servicos/cliente/finalizados/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const servicos = await Servico.getServicosAcabadosDoCliente(id);
@@ -39,7 +48,7 @@ router.get("/servicos/cliente/:id/finalizados", async (req, res) => {
 });
 
 // Serviços finalizados do prestador
-router.get("/servicos/prestador/:id/finalizados", async (req, res) => {
+router.get("/servicos/prestador/finalizados/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const servicos = await Servico.getServicosAcabadosDoPrestador(id);
@@ -50,7 +59,7 @@ router.get("/servicos/prestador/:id/finalizados", async (req, res) => {
 });
 
 // Serviços em andamento do cliente
-router.get("/servicos/cliente/:id/andamento", async (req, res) => {
+router.get("/servicos/cliente/andamento/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const servicos = await Servico.getServicosEmAndamentoDoCliente(id);
@@ -61,7 +70,7 @@ router.get("/servicos/cliente/:id/andamento", async (req, res) => {
 });
 
 // Serviços em andamento do prestador
-router.get("/servicos/prestador/:id/andamento", async (req, res) => {
+router.get("/servicos/prestador/andamento/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const servicos = await Servico.getServicosEmAndamentoDoPrestador(id);
@@ -72,7 +81,7 @@ router.get("/servicos/prestador/:id/andamento", async (req, res) => {
 });
 
 // Obter chat de um serviço
-router.get("/servicos/:id/chat", async (req, res) => {
+router.get("/servicos/chat/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const chat = await Servico.getChatPorIdServico(id);
@@ -82,8 +91,7 @@ router.get("/servicos/:id/chat", async (req, res) => {
   }
 });
 
-// Nova mensagem em um serviço (⚠️ seu código atual cria um novo serviço em vez de mensagem)
-router.post("/servicos/:id/mensagem", async (req, res) => {
+router.post("/servicos/mensagem/:id", async (req, res) => {
   try {
     const mensagem = req.body;
     const msg = await Servico.novaMensagem(mensagem);

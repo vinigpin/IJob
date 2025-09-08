@@ -3,15 +3,46 @@ const Usuario = require('../models/usuario');
 const {ObejctId} = require('mongoose').Types;
 const bcrypt = require('bcrypt');
 
-async function login(celular, senha){
+async function login(chave, senha){
+  if (ehEmail(chave)){
+    if (ehEmailValido(chave)){
+      return loginPorEmail(chave, senha);
+    }
+    return {sucesso: false, mensagem: "Email inválido"};
+  }
+  if (ehCelularValido(chave)){
+    return loginPorCelular(chave, senha);
+  }
+  return {sucesso: false, mensagem: "Celular inválido"};
+}
+
+async function loginPorCelular(celular, senha){
   try{
     const usuario = await Usuario.findOne({celular: celular});
     if (!usuario) 
-        return {sucesso: false, menssagem: "Usuário não encontrado"};
+        return {sucesso: false, mensagem: "Usuário não encontrado"};
 
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
     if (!senhaValida)
-        return {sucesso: false, menssagem: "Senha inválida"};
+        return {sucesso: false, mensagem: "Senha inválida"};
+    
+    const {senha: _, ...usuarioSemSenha} = usuario.toObject();
+    return {sucesso: true, usuario: usuarioSemSenha};
+  } 
+  catch(erro){
+    throw `Erro de login: ${erro}`;
+  }
+}
+
+async function loginPorEmail(email, senha){
+  try{
+    const usuario = await Usuario.findOne({email: email});
+    if (!usuario) 
+        return {sucesso: false, mensagem: "Usuário não encontrado"};
+
+    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    if (!senhaValida)
+        return {sucesso: false, mensagem: "Senha inválida"};
     
     const {senha: _, ...usuarioSemSenha} = usuario.toObject();
     return {sucesso: true, usuario: usuarioSemSenha};
@@ -28,6 +59,15 @@ async function cadastroUsuario(usuario){
   } 
   catch(erro){
     console.log("Erro no cadastroUsuario", erro.message);
+    throw erro;
+  }
+}
+
+async function getTodosUsuarios() {
+  try {
+    return await Usuario.find();
+  } catch (erro) {
+    console.log("Erro no getTodosUsuarios", erro.message);
     throw erro;
   }
 }
@@ -89,6 +129,7 @@ module.exports = {
   login,
   cadastroUsuario,
   getUsuarioPorId,
+  getTodosUsuarios,
   editarUsuario,
   // Prestador em específico
   getTodosOsPrestadores,
