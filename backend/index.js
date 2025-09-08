@@ -1,20 +1,33 @@
 
-const mongo = require("mongoose");
+
+const bd = require("../backend/config/bd");
+
 const express = require("express");
-const app = express();
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
-const db = require("./config/bd");
 
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const rotasU = require("../backend/routes/rotasUsuario");
+const rotasA = require("../backend/routes/rotasAvaliacao");
+const rotasC = require("../backend/routes/rotasCategoria");
+const rotasS = require("../backend/routes/rotasServico");
+
+app.use("/api/usuarios", rotasU);
+app.use("/api/Avaliacoes", rotasA);
+app.use("/api/Categorias", rotasC);
+app.use("/api/servicos", rotasS);
 
 
+app.get("/", (req, res) => {
+  res.send("API no ar");
+});
 
+app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
 
-
-
-
-
+bd.conectarBD();
 
 
 
@@ -30,9 +43,9 @@ const db = require("./config/bd");
 
 
 // alguma coisa que alguém pegou do chatgpt pra implementar o pix
-const axios = require("axios");
+//const axios = require("axios");
 
-const API_KEY = "SUA_API_KEY_AQUI"; // pegue no painel do OpenPix
+//const API_KEY = "SUA_API_KEY_AQUI"; // pegue no painel do OpenPix
 
 async function gerarPix() {
   try {
@@ -64,4 +77,4 @@ async function gerarPix() {
   }
 }
 
-gerarPix();
+//gerarPix();

@@ -24,6 +24,6 @@ function criarAvaliacao(avaliacao) {
 }
 
 module.exports = {
-    getAvaliacoesPorServico,
+    getAvaliacoesPorPrestador,
     criarAvaliacao
 };

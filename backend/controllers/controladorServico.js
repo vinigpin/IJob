@@ -103,8 +103,13 @@ async function getChatPorIdServico(idServico) {
   }
 }
 
-async function novaMensagem(mensagem) {
+async function novaMensagem(mensagem, idServico) {
   try{
+    await Servico.updateOne({
+      _id: new ObjectId(idServico)
+    },{
+      $push: { mensagens: mensagem }
+    })
     const msg = await Servico.create(mensagem)
     return msg;
   }
@@ -114,12 +119,6 @@ async function novaMensagem(mensagem) {
   }
   
 }
-
-
-
-
-
-
 
 
 module.exports = {
