@@ -15,10 +15,10 @@ const rotasA = require("../backend/routes/rotasAvaliacao");
 const rotasC = require("../backend/routes/rotasCategoria");
 const rotasS = require("../backend/routes/rotasServico");
 
-app.use("/api/usuarios", rotasU);
-app.use("/api/Avaliacoes", rotasA);
-app.use("/api/Categorias", rotasC);
-app.use("/api/servicos", rotasS);
+app.use("/api", rotasU);
+app.use("/api", rotasA);
+app.use("/api", rotasC);
+app.use("/api", rotasS);
 
 
 app.get("/", (req, res) => {

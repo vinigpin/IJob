@@ -2,6 +2,15 @@
 const Servico = require('../models/servico');
 const {ObjectId} = require("mongoose").Types;
 
+async function getTodosOsServicos() {
+  try {
+    return await Servico.find();
+  } catch (erro) {
+    console.log("Erro no getTodosOsServicos:", erro.message);
+    throw erro;
+  }
+}
+
 async function getServicosAcabadosDoCliente(idCliente){
   try{
       const servicos = await Servico.find(
@@ -122,6 +131,7 @@ async function novaMensagem(mensagem, idServico) {
 
 
 module.exports = {
+  getTodosOsServicos,
   getServicosAcabadosDoCliente, // o historico são só serviços já terminados
   getServicosAcabadosDoPrestador,
   getServicosEmAndamentoDoCliente,

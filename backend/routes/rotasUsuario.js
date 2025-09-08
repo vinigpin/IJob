@@ -46,6 +46,19 @@ router.get("/usuario/:id", async(req, res) => {
     }
 });
 
+router.get("/usuarios", async (req, res) => {
+  try {
+    const usuarios = await Usuario.getTodosUsuarios(); // ou Usuario.find()
+    if (!usuarios || usuarios.length === 0) {
+      return res.status(404).json({ mensagem: "Nenhum usuário encontrado" });
+    }
+    return res.status(200).json(usuarios);
+  } catch (erro) {
+    console.error("Erro ao buscar usuários:", erro.message);
+    res.status(500).json({ mensagem: "Erro no servidor" });
+  }
+});
+
 // Rota de listagem de prestadores
 router.get("/prestadores", async(req, res) => {
     try{
