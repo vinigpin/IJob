@@ -1,4 +1,4 @@
-# 🔨 IJob  
+# IJob  
 
 O **IJob** é um aplicativo que conecta pessoas a prestadores de serviços de forma simples, rápida e segura.  
 Com ele, o usuário pode:  
@@ -9,12 +9,12 @@ Com ele, o usuário pode:
 
 ---
 
-## 🚀 Tecnologias Utilizadas  
+## Tecnologias Utilizadas  
 
 ### Front-end  
 - **Flutter** → desenvolvimento do aplicativo móvel.  
 - **Figma** → prototipação e design das telas.  
-  - [🎨 Acessar Protótipo](https://www.figma.com/design/x5LYHjMTQsNDfcvWQl1gc2/Untitled?node-id=0-1&t=mNvyyYrPl8MyQJWK-1)
+  - [ Acessar Protótipo](https://www.figma.com/design/x5LYHjMTQsNDfcvWQl1gc2/Untitled?node-id=0-1&t=mNvyyYrPl8MyQJWK-1)
 
 ### Back-end  
 - **Node.js** → construção da API.  
@@ -22,7 +22,7 @@ Com ele, o usuário pode:
 
 ---
 
-## 📌 Funcionalidades Principais (MVP)  
+## Funcionalidades Principais (MVP)  
 - Cadastro de usuários e prestadores de serviço.  
 - Busca e filtro de prestadores por categoria/avaliação.  
 - Chat em tempo real entre cliente e prestador.  
@@ -31,19 +31,19 @@ Com ele, o usuário pode:
 
 ---
 
-## 📂 Estrutura do Projeto  
+## Estrutura do Projeto  
 - **/frontend** → código do aplicativo em Flutter.  
 - **/backend** → API desenvolvida em Node.js.  
 - **/docs** → documentação, protótipos e diagramas.  
 
 ---
 
-## 📖 Documentação e Planejamento  
+## Documentação e Planejamento  
 Toda a parte de design, requisitos e prototipação está sendo organizada no [Figma](https://www.figma.com/design/x5LYHjMTQsNDfcvWQl1gc2/Untitled?node-id=0-1&t=mNvyyYrPl8MyQJWK-1) e demais documentos estão disponíveis na pasta **/docs**.  
 
 ---
 
-## 🤝 Colaboradoes  
+## Colaboradoes  
 Alunos do cotuca colaboradores do projeto:  
 - Guilherme Profeta - 24130
 - Rafael Fazion - 24150
@@ -52,7 +52,7 @@ Alunos do cotuca colaboradores do projeto:
 
 ---
 
-## 📄 Licença  
+## Licença  
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
 
