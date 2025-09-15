@@ -1,4 +1,4 @@
-import '../prestador.dart';
+import 'prestador.dart';
 
 class Usuario {
   final String? celular;
