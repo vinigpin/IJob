@@ -25,12 +25,12 @@ app.use("/api/verificacao", rotasVerificacao);
 
 // Rota de teste/saúde
 app.get("/", (req, res) => {
-  res.send("✅ API no ar");
+  res.send("API no ar");
 });
 
 // Inicia servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
+app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
 
 // Conecta ao banco
 bd.conectarBD();
