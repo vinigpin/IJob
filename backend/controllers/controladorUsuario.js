@@ -2,8 +2,14 @@
 const Usuario = require('../models/usuario');
 const {ObejctId} = require('mongoose').Types;
 const bcrypt = require('bcrypt');
+const sanitize = require('../middleware/sanitize')
+
+
 
 async function login(chave, senha){
+  chave = sanitize(chave);
+  senha = sanitize(senha);
+
   if (ehEmail(chave)){
     if (ehEmailValido(chave)){
       return loginPorEmail(chave, senha);
@@ -17,6 +23,9 @@ async function login(chave, senha){
 }
 
 async function loginPorCelular(celular, senha){
+  celular = sanitize(celular);
+  senha = sanitize(senha);
+
   try{
     const usuario = await Usuario.findOne({celular: celular});
     if (!usuario) 
@@ -35,6 +44,8 @@ async function loginPorCelular(celular, senha){
 }
 
 async function loginPorEmail(email, senha){
+  email = sanitize(email);
+  senha = sanitize(senha);
   try{
     const usuario = await Usuario.findOne({email: email});
     if (!usuario) 
@@ -53,6 +64,8 @@ async function loginPorEmail(email, senha){
 }
 
 async function cadastroUsuario(usuario){
+  usuario = sanitize(usuario);
+
     try{
     await Usuario.create(usuario);
     return true;
@@ -73,6 +86,8 @@ async function getTodosUsuarios() {
 }
 
 async function getUsuarioPorId(id){
+  id = sanitize(id);
+
   try{
     const usuario = await Usuario.findById(id);
     return usuario;
@@ -97,7 +112,9 @@ async function getTodosOsPrestadores(){
 }
 
 async function getPrestadorPorCategoria(categorias){ // manda um vetor de categorias
+  categorias = sanitize(categorias);
   try{
+
     const usuarios = await Usuario.find({
       prestador: { $ne: null },
       "prestador.categorias": { $in: categorias}
@@ -111,6 +128,8 @@ async function getPrestadorPorCategoria(categorias){ // manda um vetor de catego
 }
 
 async function editarUsuario(id, dados){
+  id = sanitize(id);
+  dados = sanitize(dados);
   try{
     await Usuario.updateOne(
       { _id: new ObejctId(id)},

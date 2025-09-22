@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ijob_frontend/cores/AppColors.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -28,7 +29,7 @@ class WelcomePage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: AppColors.vinho,
               ),
             ),
 
@@ -57,7 +58,7 @@ class WelcomePage extends StatelessWidget {
                   // ação aqui
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red.shade700,
+                  backgroundColor: AppColors.vermelhoMedio,
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
@@ -80,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                   // ação aqui
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red.shade700,
+                  backgroundColor: AppColors.vermelhoMedio,
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
@@ -111,7 +112,7 @@ class WelcomePage extends StatelessWidget {
                   // ação aqui
                 },
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: Colors.red.shade700),
+                  side: BorderSide(color: AppColors.vermelhoClaro),
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(6),
@@ -120,7 +121,7 @@ class WelcomePage extends StatelessWidget {
                 child: Text(
                   "Entrar",
                   style: TextStyle(
-                    color: Colors.red.shade700,
+                    color: AppColors.vermelhoClaro,
                     fontSize: 16,
                   ),
                 ),

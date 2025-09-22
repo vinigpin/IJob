@@ -16,11 +16,10 @@ const UsuarioSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-UsuarioSchema.pre( "validação", (next) =>{
+UsuarioSchema.pre( "validate", function() {
   if (!celular && !email){
-    this.invalidate("Dados insuficientes", "É preciso informar um celular ou email");
+    this.invalidate("celular e email", "É preciso informar um celular ou email");
   }
-  next();
 });
 
 module.exports = mongoose.model("Usuario", UsuarioSchema);

@@ -1,7 +1,10 @@
 
 const Avaliacao = require('../models/avaliacao')
+const sanitize = require('../middleware/sanitize')
 
 function getAvaliacoesPorPrestador(idPrestador) {
+    idPrestador = sanitize(idPrestador);
+
     try{
         const avaliacao = Avaliacao.findById(idPrestador);
         return avaliacao;
@@ -13,6 +16,8 @@ function getAvaliacoesPorPrestador(idPrestador) {
 }
 
 function criarAvaliacao(avaliacao) {
+    avaliacao = sanitize(avaliacao);
+
     try{
         Avaliacao.create(avaliacao);
         return true;
