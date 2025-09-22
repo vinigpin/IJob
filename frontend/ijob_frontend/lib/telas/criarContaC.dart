@@ -8,62 +8,79 @@ class CadastroClientePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                // Título
-                const Text(
-                  "Criar conta cliente",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.vinho,
+        child: Column(
+          children: [
+            // Topo vermelho com título + botão X
+            Container(
+              color: AppColors.vermelhoMedio,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Criar conta cliente",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            ),
 
-                // Campos
-                _buildTextField("Nome"),
-                _buildTextField("Telefone"),
-                Row(
+            // Conteúdo
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
                   children: [
-                    Expanded(child: _buildTextField("CEP")),
-                    const SizedBox(width: 10),
-                    Expanded(child: _buildTextField("Nascimento")),
+                    _buildTextField("Nome"),
+                    _buildTextField("Telefone"),
+                    Row(
+                      children: [
+                        Expanded(child: _buildTextField("CEP")),
+                        const SizedBox(width: 10),
+                        Expanded(child: _buildTextField("Nascimento")),
+                      ],
+                    ),
+                    _buildTextField("CPF"),
+                    _buildTextField("Senha", obscure: true),
+                    _buildTextField("Repetir senha", obscure: true),
+
+                    const SizedBox(height: 20),
+
+                    const Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.vermelhoMedio,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                        ),
+                        child: const Text(
+                          "Criar conta",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-                _buildTextField("CPF"),
-                _buildTextField("Senha", obscure: true),
-                _buildTextField("Repetir senha", obscure: true),
-
-                const SizedBox(height: 20),
-
-                // Texto explicativo
-                const Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 12, color: Colors.black54),
-                ),
-
-                const SizedBox(height: 20),
-
-                // Botão Criar conta
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.vermelhoMedio,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                    ),
-                    child: const Text("Criar conta"),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
