@@ -1,6 +1,6 @@
-
 const Servico = require('../models/servico');
 const {ObjectId} = require("mongoose").Types;
+const sanitize = require('../middleware/sanitize');
 
 async function getTodosOsServicos() {
   try {
@@ -12,7 +12,10 @@ async function getTodosOsServicos() {
 }
 
 async function getServicosAcabadosDoCliente(idCliente){
+  idCliente = sanitize(idCliente);
+
   try{
+      idCliente = sanitize(idCliente);
       const servicos = await Servico.find(
       {
         idCliente: new ObjectId(idCliente),
@@ -27,7 +30,10 @@ async function getServicosAcabadosDoCliente(idCliente){
 }
 
 async function getServicosAcabadosDoPrestador(idPrestador){
+    idPrestador = sanitize(idPrestador);
+
   try{
+    idPrestador = sanitize(idPrestador);
     const servicos = await Servico.find(
       {
         idPrestador:new ObjectId(idPrestador),      
@@ -42,7 +48,10 @@ async function getServicosAcabadosDoPrestador(idPrestador){
 }
 
 async function getServicosEmAndamentoDoCliente(idCliente){
+    idCliente = sanitize(idCliente);
+
    try{
+      idCliente = sanitize(idCliente);
       const servicos = await Servico.find(
       {
         idCliente: new ObjectId(idCliente),
@@ -57,7 +66,10 @@ async function getServicosEmAndamentoDoCliente(idCliente){
 }
 
 async function getServicosEmAndamentoDoPrestador(idPrestador){
+    idPrestador = sanitize(idPrestador);
+
   try{
+    idPrestador = sanitize(idPrestador);
     const servicos = await Servico.find(
       {
         idPrestador:new ObjectId(idPrestador),      
@@ -72,6 +84,8 @@ async function getServicosEmAndamentoDoPrestador(idPrestador){
 }
 
 async function criarServico(servico) {
+    servico = sanitize(servico);
+
   try{
          const aquisicao = await Servico.create(servico)
          return true
@@ -83,6 +97,9 @@ async function criarServico(servico) {
 }
 
 async function alterarStatusDoServico(idServico, estado) {
+    idServico = sanitize(idServico);
+    estado = sanitize(estado);
+
   try{
     const status = await Servico.updateOne(
       {
@@ -102,6 +119,8 @@ async function alterarStatusDoServico(idServico, estado) {
 }
 
 async function getChatPorIdServico(idServico) {
+    idServico = sanitize(idServico);
+
   try{
     const chat = await Servico.findById(idServico).mensagens;
     return chat;
@@ -113,6 +132,9 @@ async function getChatPorIdServico(idServico) {
 }
 
 async function novaMensagem(mensagem, idServico) {
+    mensagem = sanitize(mensagem);
+    idServico = sanitize(idServico);
+
   try{
     await Servico.updateOne({
       _id: new ObjectId(idServico)
