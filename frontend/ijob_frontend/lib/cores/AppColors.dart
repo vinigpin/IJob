@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color cor1 = Color.fromARGB(255, 241, 4, 4);
-  static const Color cor2 = Color(0xFFFFFFFF);
-  static const Color cor3 = Color(0xFFFFFFFF);
-  static const Color cor4 = Color(0xFFFFFFFF);
+  static const Color vermelhoEscuro = Color(0x9F1F35);
+  static const Color vermelhoMedio = Color(0xCC2F4A);
+  static const Color vermelhoClaro = Color(0xE51934);
+  static const Color vinho = Color(0x651A1A);
 }
