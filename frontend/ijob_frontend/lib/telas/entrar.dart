@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:ijob_frontend/cores/AppColors.dart';
+import 'package:http/http.dart' as http;
+
+void login(BuildContext context, String user, String senha){
+  final res = await consultaLogin(user, senha);
+  if (res.statusCode  == 201){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ExibirNomePage(nome: Usuario.fromJson(jsonDecode(res.body) as Map<String, dynamic>).nome)
+        ) // isso nao foi testado
+    );
+  }
+}
+
+Future<http.Response> consultaLogin(String user, String senha){
+  return http.post(
+    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({'celular': user, 'senha': senha}),
+  );
+}
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
+  final telefoneCon = TextEditingController()
+  final senhaCon = TextEditingController()
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +65,17 @@ class LoginPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildTextField("Telefone"),
-                    _buildTextField("Senha", obscure: true),
+                    _buildTextField("Telefone", telefoneCon),
+                    _buildTextField("Senha", senhaCon, obscure: true),
 
                     const SizedBox(height: 10),
 
                     Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          login(context, telefoneCon.text, senhaCon.text);
+                        },
                         child: const Text(
                           "Esqueceu sua senha?",
                           style: TextStyle(color: Colors.black54),
@@ -81,18 +108,49 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildTextField(String hint, {bool obscure = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextField(
-        obscureText: obscure,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+Widget _buildTextField(
+  String hint,
+  TextEditingController controller, {
+  bool obscure = false,
+}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: TextField(
+      controller: controller, // 🔹 agora o campo é controlado
+      obscureText: obscure,
+      decoration: InputDecoration(
+        hintText: hint,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+      ),
+    ),
+  );
+}
+
+
+
+
+// classe de teste
+class ExibirNomePage extends StatelessWidget {
+  final String nome;
+
+  const ExibirNomePage({
+    Key? key,
+    required this.nome,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Exibir Nome")),
+      body: Center(
+        child: Text(
+          "Nome: $nome",
+          style: const TextStyle(fontSize: 24),
         ),
       ),
     );
