@@ -19,18 +19,19 @@ Future<List<Categoria>> modificarDados() async {
   try {
     final http.Response response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<dynamic> listaJson = jsonDecode(response.body) as List<dynamic>;
+      final List<dynamic> listaJson =
+          jsonDecode(response.body) as List<dynamic>;
       final List<Categoria> categorias = [];
 
-      listaJson.forEach(json) {
-        categorias.add(Categoria.fromJson(json));
-      }
-      return;
+      listaJson.forEach((json) {
+        categorias.add(Categoria.fromJson(json as Map<String, dynamic>));
+      });
+      return categorias;
     } else {
-      return false;
+      return [];
     }
   } catch (e) {
     print("Exeção: $e");
-    return false;
+    return [];
   }
 }

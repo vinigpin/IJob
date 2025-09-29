@@ -5,14 +5,15 @@ const sanitize = require('../middleware/sanitize')
 
 async function login(celular, senha){
   try{
-    celular = sanitize(chave);
+    celular = sanitize(celular);
     senha = sanitize(senha);
 
     const usuario = await Usuario.findOne({celular: celular});
     if (!usuario) 
         return {sucesso: false, mensagem: "Usuário não encontrado"};
 
-    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    //const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    const senhaValida = usuario.senha == senha;
     if (!senhaValida)
         return {sucesso: false, mensagem: "Senha inválida"};
     
