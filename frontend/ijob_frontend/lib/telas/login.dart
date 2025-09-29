@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:ijob_frontend/cores/AppColors.dart';
+import '../modelos/usuario/Usuario.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:ijob_frontend/telas/home.dart'; // para jsonDecode
+
+Future<void> login(BuildContext context, telefone, senha) async {
+  final url = Uri.parse("http://localhost:3000/api/usuarios/login");
+  try {
+    final response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"telefone": telefone, "senha": senha}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      print("Login realizado com sucesso: $data");
+      final user = Usuario.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
+      print("nome do usuário que logou: ${user.nome}");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TelaHome()),
+      );
+    } else {
+      print("Erro no login: ${response.statusCode} - ${response.body}");
+    }
+  } catch (e) {
+    print("Exceção: $e");
+  }
+}
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                 children: [
                   const Text(
                     "Entrar",
@@ -54,8 +84,11 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _buildTextField("Telefone", controller: telefoneController),
-                    _buildTextField("Senha",
-                        obscure: true, controller: senhaController),
+                    _buildTextField(
+                      "Senha",
+                      obscure: true,
+                      controller: senhaController,
+                    ),
 
                     const SizedBox(height: 10),
 
@@ -77,7 +110,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: ElevatedButton(
                         onPressed: () async {
                           final url = Uri.parse(
-                              "http://localhost:3000/api/usuarios/login");
+                            "http://localhost:3000/api/usuarios/login",
+                          );
 
                           try {
                             final response = await http.post(
@@ -94,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => const TelaHome(),
-                                )
+                                ),
                               );
                             } else {
                               
@@ -123,8 +157,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildTextField(String hint,
-      {bool obscure = false, TextEditingController? controller}) {
+  Widget _buildTextField(
+    String hint, {
+    bool obscure = false,
+    TextEditingController? controller,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextField(
@@ -132,9 +169,7 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: obscure,
         decoration: InputDecoration(
           hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
         ),
       ),
