@@ -1,50 +1,14 @@
-
 const Usuario = require('../models/usuario');
 const {ObejctId} = require('mongoose').Types;
 const bcrypt = require('bcrypt');
 const sanitize = require('../middleware/sanitize')
 
-
-
-async function login(chave, senha){
-  chave = sanitize(chave);
-  senha = sanitize(senha);
-  // if (ehEmail(chave)){
-  //   if (ehEmailValido(chave)){
-  //     return loginPorEmail(chave, senha);
-  //   }
-  //   return {sucesso: false, mensagem: "Email inválido"};
-  // }
-  //if (ehCelularValido(chave)){
-  return loginPorCelular(chave, senha);
-  //}
-  //return {sucesso: false, mensagem: "Celular inválido"};
-}
-
-async function loginPorCelular(celular, senha){
+async function login(celular, senha){
   try{
+    celular = sanitize(chave);
+    senha = sanitize(senha);
+
     const usuario = await Usuario.findOne({celular: celular});
-    if (!usuario) 
-        return {sucesso: false, mensagem: "Usuário não encontrado"};
-
-    //const senhaValida = await bcrypt.compare(senha, usuario.senha);
-    const senhaValida = senha == usuario.senha
-    if (!senhaValida)
-        return {sucesso: false, mensagem: "Senha inválida"};
-    
-    const {senha: _, ...usuarioSemSenha} = usuario.toObject();
-    return {sucesso: true, usuario: usuarioSemSenha};
-  } 
-  catch(erro){
-    throw `Erro de login: ${erro}`;
-  }
-}
-
-async function loginPorEmail(email, senha){
-  email = sanitize(email);
-  senha = sanitize(senha);
-  try{
-    const usuario = await Usuario.findOne({email: email});
     if (!usuario) 
         return {sucesso: false, mensagem: "Usuário não encontrado"};
 
@@ -62,8 +26,8 @@ async function loginPorEmail(email, senha){
 
 async function cadastroUsuario(usuario){
   usuario = sanitize(usuario);
-
-    try{
+  usuario.senha = await bcrypt.hash(usuario.senha, 10)
+  try{
     await Usuario.create(usuario);
     return true;
   } 

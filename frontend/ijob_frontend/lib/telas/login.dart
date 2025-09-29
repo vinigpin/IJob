@@ -90,8 +90,6 @@ class _LoginPageState extends State<LoginPage> {
                             );
 
                             if (response.statusCode == 200) {
-                              final data = jsonDecode(response.body);
-                              print("✅ Login realizado com sucesso: $data");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -99,11 +97,10 @@ class _LoginPageState extends State<LoginPage> {
                                 )
                               );
                             } else {
-                              print(
-                                  "❌ Erro no login: ${response.statusCode} - ${response.body}");
+                              
                             }
                           } catch (e) {
-                            print("⚠️ Exceção: $e");
+                            print(e);
                           }
                         },
                         style: ElevatedButton.styleFrom(

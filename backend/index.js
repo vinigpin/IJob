@@ -9,9 +9,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => {
-  console.log(`📩 [${new Date().toISOString()}] ${req.method} ${req.url}`);
+  res.on("finish", () => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - ${res.statusCode}`);
+  });
   next();
 });
+
 
 // Importa rotas
 const rotasUsuario = require("./routes/rotasUsuario");
@@ -34,7 +37,7 @@ app.get("/", (req, res) => {
 
 // Inicia servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor ligado: http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`\nServidor rodando em: http://localhost:${PORT}`))
 
 // Conecta ao banco
 bd.conectarBD();
