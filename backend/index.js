@@ -8,6 +8,10 @@ const app = express();
 // Middlewares globais
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log(`📩 [${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
 
 // Importa rotas
 const rotasUsuario = require("./routes/rotasUsuario");
@@ -30,7 +34,7 @@ app.get("/", (req, res) => {
 
 // Inicia servidor
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
+app.listen(PORT, () => console.log(`Servidor ligado: http://localhost:${PORT}`));
 
 // Conecta ao banco
 bd.conectarBD();

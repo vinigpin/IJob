@@ -9,29 +9,26 @@ const sanitize = require('../middleware/sanitize')
 async function login(chave, senha){
   chave = sanitize(chave);
   senha = sanitize(senha);
-
-  if (ehEmail(chave)){
-    if (ehEmailValido(chave)){
-      return loginPorEmail(chave, senha);
-    }
-    return {sucesso: false, mensagem: "Email inválido"};
-  }
-  if (ehCelularValido(chave)){
-    return loginPorCelular(chave, senha);
-  }
-  return {sucesso: false, mensagem: "Celular inválido"};
+  // if (ehEmail(chave)){
+  //   if (ehEmailValido(chave)){
+  //     return loginPorEmail(chave, senha);
+  //   }
+  //   return {sucesso: false, mensagem: "Email inválido"};
+  // }
+  //if (ehCelularValido(chave)){
+  return loginPorCelular(chave, senha);
+  //}
+  //return {sucesso: false, mensagem: "Celular inválido"};
 }
 
 async function loginPorCelular(celular, senha){
-  celular = sanitize(celular);
-  senha = sanitize(senha);
-
   try{
     const usuario = await Usuario.findOne({celular: celular});
     if (!usuario) 
         return {sucesso: false, mensagem: "Usuário não encontrado"};
 
-    const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    //const senhaValida = await bcrypt.compare(senha, usuario.senha);
+    const senhaValida = senha == usuario.senha
     if (!senhaValida)
         return {sucesso: false, mensagem: "Senha inválida"};
     

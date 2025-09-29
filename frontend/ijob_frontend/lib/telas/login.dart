@@ -1,170 +1,144 @@
 import 'package:flutter/material.dart';
 import 'package:ijob_frontend/cores/AppColors.dart';
-import 'criarContaP.dart';
-import 'criarContaC.dart';
-import 'entrar.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class TelaInicio extends StatefulWidget {
-  const TelaInicio({super.key});
+import 'package:ijob_frontend/telas/home.dart'; // para jsonDecode
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<TelaInicio> createState() => _InicioState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _InicioState extends State<TelaInicio> {
+class _LoginPageState extends State<LoginPage> {
+  // Controllers para capturar o que o usuário digitar
+  final TextEditingController telefoneController = TextEditingController();
+  final TextEditingController senhaController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            // Faixa vermelha no topo
+            // Topo vermelho
             Container(
               color: AppColors.vermelhoMedio,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 15)
-            ),
-
-            // Conteúdo principal
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Logo
-                  Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Image.asset(
-                      'imgs/logo3_ijob.png',
-                      height: 150,
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Título
                   const Text(
-                    "Bem-vindo ao IJob",
+                    "Entrar",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.vinho,
+                      color: Colors.white,
                     ),
                   ),
-
-                  const SizedBox(height: 10),
-
-                  // Texto de descrição
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30.0),
-                    child: Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // Botão Criar conta profissional
-                  SizedBox(
-                    width: 250,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CadastroProfissionalPage(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.vermelhoMedio,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: const Text(
-                        "Criar conta profissional",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Botão Criar conta cliente
-                  SizedBox(
-                    width: 250,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CadastroClientePage(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.vermelhoMedio,
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: const Text(
-                        "Criar conta cliente",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Texto "Já possui uma conta?"
-                  const Text(
-                    "Já possui uma conta?",
-                    style: TextStyle(color: Colors.black87),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Botão Entrar
-                  SizedBox(
-                    width: 250,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
-                        );
-                      },
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: AppColors.vermelhoClaro),
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                      child: Text(
-                        "Entrar",
-                        style: TextStyle(
-                          color: AppColors.vermelhoClaro,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
             ),
+
+            // Conteúdo
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildTextField("Telefone", controller: telefoneController),
+                    _buildTextField("Senha",
+                        obscure: true, controller: senhaController),
+
+                    const SizedBox(height: 10),
+
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Esqueceu sua senha?",
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          final url = Uri.parse(
+                              "http://localhost:3000/api/usuarios/login");
+
+                          try {
+                            final response = await http.post(
+                              url,
+                              headers: {"Content-Type": "application/json"},
+                              body: jsonEncode({
+                                "telefone": telefoneController.text,
+                                "senha": senhaController.text,
+                              }),
+                            );
+
+                            if (response.statusCode == 200) {
+                              final data = jsonDecode(response.body);
+                              print("✅ Login realizado com sucesso: $data");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const TelaHome(),
+                                )
+                              );
+                            } else {
+                              print(
+                                  "❌ Erro no login: ${response.statusCode} - ${response.body}");
+                            }
+                          } catch (e) {
+                            print("⚠️ Exceção: $e");
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.vermelhoMedio,
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                        ),
+                        child: const Text(
+                          "Entrar",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String hint,
+      {bool obscure = false, TextEditingController? controller}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: TextField(
+        controller: controller,
+        obscureText: obscure,
+        decoration: InputDecoration(
+          hintText: hint,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
         ),
       ),
     );

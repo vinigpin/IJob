@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 async function conectarBD() {
   await mongoose.connect(process.env.STRING_DE_CONEXAO)
-  .then(() => console.log("Conectado"))
+  .then(() => console.log("Conectado ao mongoDB!"))
   .catch(err => console.error("Erro ao conectar:", err));
 }
 

@@ -10,12 +10,12 @@ router.post("/login", async (req, res) => {
     try {
         const { telefone, senha } = req.body;
         resultado = await Usuario.login(telefone, senha);
-        
+        console.log(resultado)
         if (!resultado.sucesso) 
             return res.status(401).json(resultado)
         return res.status(200).json(resultado)
     } catch (erro) {
-        res.status(500).json({mensagem: "Erro no servidor"});
+        res.status(500).json({mensagem: erro});
     }
 });
 

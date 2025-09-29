@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './telas/login.dart';
+import 'telas/inicio.dart';
 
 void main() {
   runApp(const MainApp());
