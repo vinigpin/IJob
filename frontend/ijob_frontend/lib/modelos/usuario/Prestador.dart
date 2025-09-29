@@ -13,20 +13,26 @@ class Prestador {
 
   factory Prestador.fromJson(Map<String, dynamic> json) {
     return switch (json) {
-      {
-        'categorias': List categoriasJson,
-      } =>
-        Prestador(
-          contaCadastrada: json['contaCadastrada'] is int
-              ? json['contaCadastrada'] as int
-              : null,
-          categorias: categoriasJson.cast<String>(),
-          nascimento: json['nascimento'] is String
-              ? DateTime.parse(json['nascimento'])
-              : null,
-          valor: json['valor'] is num ? (json['valor'] as num).toDouble() : null,
-        ),
+      {'categorias': List categoriasJson} => Prestador(
+        contaCadastrada: json['contaCadastrada'] is int
+            ? json['contaCadastrada'] as int
+            : null,
+        categorias: categoriasJson.cast<String>(),
+        nascimento: json['nascimento'] is String
+            ? DateTime.parse(json['nascimento'])
+            : null,
+        valor: json['valor'] is num ? (json['valor'] as num).toDouble() : null,
+      ),
       _ => Prestador(categorias: const []), // fallback se prestador vier vazio
+    };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'contaCadastrada': contaCadastrada,
+      'categorias': categorias,
+      'nascimento': nascimento?.toIso8601String(),
+      'valor': valor,
     };
   }
 }
